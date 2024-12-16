@@ -1,0 +1,16 @@
+# Ignore target directory (nơi Maven build các file .jar)
+target/
+
+# Ignore các tệp của IDE
+.idea/
+*.iml
+
+# Ignore các tệp log
+*.log
+
+# Ignore các tệp cấu hình người dùng
+*.properties
+
+# Ignore các tệp hệ thống của macOS và Windows
+.DS_Store
+Thumbs.db

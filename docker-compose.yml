@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./ems-frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+    # env_file:
+    #   - ./ems-frontend/.env
+    depends_on:
+      - backend
+    networks:
+      - ems-network
+
+  backend:
+    build:
+      context: ./ems-backend
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8080
+    # env_file:
+    #   - ./ems-backend/.env
+    depends_on:
+      - postgres-db
+    networks:
+      - ems-network
+
+  postgres-db:
+    image: postgres:16
+    container_name: postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: ems_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+    networks:
+      - ems-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+
+networks:
+  ems-network:
+
+volumes:
+  postgres-data:
